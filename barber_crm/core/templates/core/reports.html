@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block page_title %}Kunlik hisobot{% endblock %}
+{% block content %}
+<div class="section-head">
+  <div><span class="eyebrow">DAILY REPORT</span><h2>Kunlik hisobot</h2><p class="muted">Tanlangan kun bo‘yicha tushum, xarajat, navbat va baholar.</p></div>
+  <form method="get" class="card form" style="padding:10px;display:flex;gap:8px;align-items:center">
+    <input type="date" name="date" value="{{ report_date|date:'Y-m-d' }}">
+    <button class="primary">Ko‘rsatish</button>
+  </form>
+</div>
+
+<div class="stats">
+  <div class="stat accent"><span>💰 Tushum</span><b>{{ income|floatformat:0 }} so‘m</b><small>{{ report_date|date:'d.m.Y' }}</small></div>
+  <div class="stat"><span>💸 Xarajat</span><b>{{ expense|floatformat:0 }} so‘m</b><small>Kunlik</small></div>
+  <div class="stat"><span>📈 Sof natija</span><b>{{ net|floatformat:0 }} so‘m</b><small>Tushum − xarajat</small></div>
+  <div class="stat"><span>📅 Navbatlar</span><b>{{ appointment_count }}</b><small>{{ done_count }} ta tugallangan</small></div>
+  <div class="stat"><span>⭐ Baho</span><b>{% if avg_rating %}{{ avg_rating }}/5{% else %}—{% endif %}</b><small>{{ rating_count }} ta baho</small></div>
+</div>
+
+<div class="two-col">
+  <section class="card table-card">
+    <div class="section-head"><div><h3>To‘lov usullari</h3></div></div>
+    <div class="table-wrap"><table>
+      <tr><th>Usul</th><th>Summa</th></tr>
+      {% for x in payment_methods %}<tr><td>{{ x.label }}</td><td>{{ x.amount|floatformat:0 }} so‘m</td></tr>{% endfor %}
+    </table></div>
+  </section>
+  <section class="card table-card">
+    <div class="section-head"><div><h3>Eng ko‘p xizmatlar</h3></div></div>
+    <div class="table-wrap"><table>
+      <tr><th>Xizmat</th><th>Soni</th><th>Summa</th></tr>
+      {% for x in by_service %}<tr><td>{{ x.service__name }}</td><td>{{ x.n }}</td><td>{{ x.total|floatformat:0 }} so‘m</td></tr>{% empty %}<tr><td colspan="3" class="empty">Bu kunda tugallangan xizmat yo‘q.</td></tr>{% endfor %}
+    </table></div>
+  </section>
+</div>
+
+<section class="card" style="margin-top:18px">
+  <div class="mini-grid">
+    <div><b>{{ done_count }}</b><span>✅ Tugallangan</span></div>
+    <div><b>{{ cancelled_count }}</b><span>❌ Bekor qilingan</span></div>
+    <div><b>{{ appointment_count }}</b><span>📋 Jami navbat</span></div>
+    <div><b>{{ rating_count }}</b><span>⭐ Mijoz bahosi</span></div>
+  </div>
+</section>
+{% endblock %}

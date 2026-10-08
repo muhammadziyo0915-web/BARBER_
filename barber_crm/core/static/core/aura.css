@@ -1,0 +1,91 @@
+/* ===== AURA v2 — premium barber tema (style.css ustiga qo'shiladi) ===== */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap");
+:root{--bg:#0c0a08;--panel:#15120e;--panel2:#1c1813;--line:#2c2620;--text:#f5efe4;--muted:#a69b88;--accent:#e3b55c;--accent2:#c99a3e;--ok:#6fd6a0;--danger:#ff7468;--radius:20px;--shadow:0 18px 50px #0008;--glass:#17130fcc}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(900px 500px at 85% -10%,#2a2012 0,transparent 60%),radial-gradient(700px 500px at -10% 110%,#1d1710 0,transparent 55%),var(--bg);transition:background .3s,color .3s}
+h1,h2,.hero h2,.booking-hero h2,.login-card h1{font-family:"Playfair Display","Space Grotesk",serif;letter-spacing:.2px}
+.topbar h1{font-family:"Playfair Display",serif;font-size:32px}
+.ambient{opacity:.10}.a2{background:#b5702a}
+/* sidebar */
+.sidebar{background:var(--glass);border-right:1px solid var(--line)}
+.brand>span,.logo-big{background:linear-gradient(135deg,#f0cf85,#c99a3e);box-shadow:0 8px 24px #e3b55c33}
+.sidebar a{position:relative;font-weight:500}
+.sidebar a:hover{background:#ffffff0d;color:var(--text);transform:translateX(3px)}
+.sidebar a.active{background:linear-gradient(90deg,#e3b55c26,#e3b55c08);color:var(--accent);font-weight:700}
+.sidebar a.active:before{content:"";position:absolute;left:-18px;top:10px;bottom:10px;width:4px;border-radius:0 4px 4px 0;background:var(--accent)}
+.sidebar a span{flex:1}
+/* buttons */
+.pill,.primary{background:linear-gradient(135deg,#f0cf85,#d6a64c);color:#17110a;border-color:#d6a64c;font-weight:800}
+.primary:hover,.pill:hover{transform:translateY(-2px);box-shadow:0 12px 28px #e3b55c33}
+.ghost,.user-chip{background:#ffffff08}.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.icon-btn{cursor:pointer;font-size:15px;line-height:1}
+.theme-toggle{border:1px solid var(--line);background:#ffffff08;color:var(--text);border-radius:12px;padding:10px 12px;cursor:pointer;font-size:15px;transition:.2s}.theme-toggle:hover{border-color:var(--accent)}
+/* hero & cards */
+.hero,.booking-hero{background:linear-gradient(120deg,#2a2012,#16120e 55%,#14110d);border-color:#e3b55c22}
+.hero:after,.booking-hero:after{background:var(--accent);opacity:.16}
+.hero h2 em,.booking-hero h2 em{color:var(--accent);font-style:italic}
+.card,.stat{background:var(--glass);backdrop-filter:blur(10px);transition:transform .2s,border-color .2s}
+.card:hover,.stat:hover{border-color:#e3b55c44}
+.stat:hover{transform:translateY(-3px)}
+.stat.accent{background:linear-gradient(135deg,#3a2c14,#16120e);border-color:#e3b55c44}
+.stat b{color:var(--text)}.stat.accent b{color:var(--accent)}
+.dark-card{background:linear-gradient(145deg,#1d1812,#100d0a)}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px #e3b55c22}
+input,select,textarea{background:#0e0c09;transition:border-color .2s}
+.avatar{background:#2a2218;color:var(--accent)}
+.section-head a,.service-card b,.service-card>span,.step{color:var(--accent)}
+.bar-line i{background:linear-gradient(90deg,#c99a3e,#f0cf85)}
+.bubble.user{background:var(--accent)}.chat-input button{background:var(--accent)}
+.status{background:#ffffff10}.status.confirmed{color:var(--accent)}
+tbody tr{transition:background .15s}tbody tr:hover{background:#ffffff08}
+.team-card,.service-card,.upcoming>div{transition:transform .2s,border-color .2s}
+.team-card:hover,.service-card:hover,.upcoming>div:hover{transform:translateY(-3px);border-color:#e3b55c55}
+.service-cover{transition:transform .3s}.service-card:hover .service-cover{transform:scale(1.02)}
+/* quick tiles */
+.quick-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.qtile{display:flex;align-items:center;gap:12px;padding:15px 16px;border:1px solid var(--line);border-radius:16px;background:var(--glass);color:var(--text);text-decoration:none;font-weight:600;transition:.2s}
+.qtile i{font-style:normal;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#e3b55c1f;font-size:18px}
+.qtile small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+.qtile:hover{transform:translateY(-3px);border-color:var(--accent)}
+/* table search */
+.tsearch{margin:6px 6px 12px;max-width:340px}
+.tsearch input{padding:10px 13px;border-radius:12px}
+/* toast */
+.toast{background:var(--panel2);border-color:var(--accent);cursor:pointer;animation:tin .35s ease}
+@keyframes tin{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+.main>*{animation:fadeup .4s ease both}@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* login */
+.login-page{background:radial-gradient(700px 500px at 50% 0,#2d2212 0,transparent 65%),var(--bg)}
+.login-card{background:var(--glass);backdrop-filter:blur(14px);border-color:#e3b55c33}
+/* scroll top */
+#toTop{position:fixed;right:18px;bottom:90px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--accent);cursor:pointer;display:none;z-index:40;font-size:18px}
+/* tabbar (mobil) */
+.tabbar{display:none}
+@media(max-width:760px){
+ .main{padding-bottom:96px}
+ .tabbar{display:flex;position:fixed;left:10px;right:10px;bottom:10px;z-index:50;background:var(--glass);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:22px;padding:6px;justify-content:space-around;box-shadow:var(--shadow)}
+ .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 4px;border-radius:16px;color:var(--muted);text-decoration:none;font-size:11px}
+ .tabbar a i{font-style:normal;font-size:19px;line-height:1}
+ .tabbar a.active{color:var(--accent);background:#e3b55c18}
+ .tabbar a.tab-plus{flex:0 0 52px;height:52px;margin-top:-22px;border-radius:50%;background:linear-gradient(135deg,#f0cf85,#d6a64c);color:#17110a;justify-content:center;box-shadow:0 10px 24px #e3b55c44}
+ .quick-row{grid-template-columns:1fr 1fr}
+ #toTop{bottom:100px}.topbar h1{font-size:26px}
+}
+@media(max-width:1050px){.quick-row{grid-template-columns:repeat(2,1fr)}}
+/* ===== YORUG' REJIM ===== */
+[data-theme="light"]{--bg:#f7f2e9;--panel:#fff;--panel2:#fffaf1;--line:#e6dcc9;--text:#22190f;--muted:#7a6e5a;--accent:#b8862e;--accent2:#9a6f20;--glass:#ffffffd9;--shadow:0 14px 40px #6b4f1d1f}
+[data-theme="light"] body{background:radial-gradient(900px 500px at 85% -10%,#f3e3c0 0,transparent 60%),var(--bg)}
+[data-theme="light"] .sidebar,[data-theme="light"] .mobile-top{background:#fffaf1f2}
+[data-theme="light"] .sidebar a{color:#5d5242}[data-theme="light"] .sidebar a:hover{background:#b8862e14;color:var(--text)}
+[data-theme="light"] .sidebar a.active{color:#8a6118;background:#b8862e1f}
+[data-theme="light"] .hero,[data-theme="light"] .booking-hero{background:linear-gradient(120deg,#fbefd2,#fff8ea 60%,#fffdf8)}
+[data-theme="light"] .stat.accent{background:linear-gradient(135deg,#fbe8bd,#fff8ea)}
+[data-theme="light"] .stat.accent b,[data-theme="light"] .section-head a,[data-theme="light"] .service-card b,[data-theme="light"] .step{color:#8a6118}
+[data-theme="light"] .dark-card{background:linear-gradient(145deg,#fff6e3,#fffdf8)}
+[data-theme="light"] input,[data-theme="light"] select,[data-theme="light"] textarea{background:#fffdf8;color:var(--text)}
+[data-theme="light"] .avatar,[data-theme="light"] .profile-photo.placeholder{background:#f3e6c9;color:#8a6118}
+[data-theme="light"] .bubble.bot{background:#f6ecd8}[data-theme="light"] .mini-grid div,[data-theme="light"] .quick-links a{background:#b8862e0f;color:var(--text)}
+[data-theme="light"] .login-page{background:radial-gradient(700px 500px at 50% 0,#f3e3c0 0,transparent 65%),var(--bg)}
+[data-theme="light"] .ghost,[data-theme="light"] .user-chip,[data-theme="light"] .icon-btn,[data-theme="light"] .theme-toggle{background:#fff;color:var(--text)}
+[data-theme="light"] tbody tr:hover{background:#b8862e0d}[data-theme="light"] .ambient{opacity:.07}
+[data-theme="light"] .tabbar a.active{background:#b8862e1f}

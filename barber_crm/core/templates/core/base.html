@@ -1,0 +1,372 @@
+{% load static %}
+
+<!doctype html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#0b0d12">
+
+    <title>Barber Aura CRM</title>
+
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/aura.css' %}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>✂️</text></svg>">
+    <script>try{var t=localStorage.getItem("aura-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+
+    <style>
+        /* ===== PROFIL AVATAR ===== */
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: #ffffff;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            border: 2px solid rgba(255,255,255,.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,.25);
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .user-chip-name {
+            font-weight: 600;
+        }
+
+        /* Telefon ekranida ham chiroyli ko‘rinsin */
+        @media (max-width: 700px) {
+            .user-chip-name {
+                display: none;
+            }
+
+            .user-avatar {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="ambient a1"></div>
+<div class="ambient a2"></div>
+
+
+<!-- MOBILE TOP -->
+<div class="mobile-top">
+    <button
+        class="icon-btn"
+        onclick="document.body.classList.toggle('menu-open')"
+    >
+        ☰
+    </button>
+
+    <b>✂️ BARBER AURA</b>
+
+    <div style="display:flex;gap:8px">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Mavzu">🌙</button>
+        <a class="icon-btn" href="{% url 'public_booking' %}">＋</a>
+    </div>
+</div>
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="brand">
+        <span>✂️</span>
+
+        <div>
+            <b>BARBER</b>
+            <small>AURA CRM</small>
+        </div>
+    </div>
+
+
+    <nav>
+
+        {% if request.user.is_authenticated %}
+
+            <a href="{% url 'dashboard' %}">
+                ⌂
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{% if role == 'barber' %}{% url 'barber_appointments' %}{% else %}{% url 'appointments' %}{% endif %}">
+                ◷
+                <span>Navbatlar</span>
+            </a>
+
+        {% endif %}
+
+
+        <a href="{% url 'public_booking' %}">
+            ✦
+            <span>Online bron</span>
+        </a>
+
+
+        {% if request.user.is_authenticated %}
+
+            {% if role != 'barber' %}
+
+                <a href="{% url 'customers' %}">
+                    ♙
+                    <span>Mijozlar</span>
+                </a>
+
+                <a href="{% url 'barbers' %}">
+                    ✂️
+                    <span>Sartaroshlar</span>
+                </a>
+
+                <a href="{% url 'services' %}">
+                    ◈
+                    <span>Xizmatlar</span>
+                </a>
+
+                <a href="{% url 'payments' %}">
+                    ＄
+                    <span>To‘lovlar</span>
+                </a>
+
+                <a href="{% url 'settlements' %}">
+                    💸
+                    <span>Barber hisob-kitobi</span>
+                </a>
+
+                <a href="{% url 'expenses' %}">
+                    ↘️
+                    <span>Xarajatlar</span>
+                </a>
+
+                <a href="{% url 'reports' %}">
+                    ◒
+                    <span>Hisobotlar</span>
+                </a>
+
+            {% endif %}
+
+
+            <a href="{% url 'assistant' %}">
+                ✦
+                <span>Mini Chat</span>
+            </a>
+            <a href="{% url 'profile' %}">
+                ◉
+                <span>Profilim</span>
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+
+    <div class="side-bottom">
+
+        <a href="/admin/">
+            ⚙️ Admin
+        </a>
+
+        {% if request.user.is_authenticated %}
+
+            <a href="{% url 'logout' %}">
+                ⇥ Chiqish
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                ⇥ Kirish
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+    <header class="topbar">
+
+        <div>
+            <span class="eyebrow">
+                BARBER SHOP MANAGEMENT
+            </span>
+
+            <h1>
+                {% block page_title %}
+                    Boshqaruv markazi
+                {% endblock %}
+            </h1>
+        </div>
+
+
+        <div class="top-actions">
+
+            <button class="theme-toggle" type="button" title="Yorug‘ / qorong‘i rejim">🌙</button>
+
+            <a
+                class="pill"
+                href="{% url 'public_booking' %}"
+            >
+                ＋ Oldindan navbat
+            </a>
+
+
+            {% if request.user.is_authenticated %}
+
+                <!-- PROFIL -->
+                <a
+                    class="user-chip"
+                    href="{% url 'profile' %}"
+                    title="Profilim"
+                >
+
+                    <div class="user-avatar">
+
+                        {% if request.user.profile.photo %}
+
+                            <img
+                                src="{{ request.user.profile.photo.url }}"
+                                alt="Profil rasmi"
+                            >
+
+                        {% else %}
+
+                            {{ request.user.first_name|first|default:request.user.username|first|upper }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <span class="user-chip-name">
+                        {{ request.user.get_full_name|default:request.user.username }}
+                    </span>
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </header>
+
+
+    <!-- XABARLAR -->
+    {% for message in messages %}
+
+        <div class="toast {{ message.tags }}">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+
+    <!-- SAHIFA -->
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<script>
+    setTimeout(() => {
+        document
+            .querySelectorAll('.toast')
+            .forEach(x => x.classList.add('hide'));
+    }, 5000);
+</script>
+
+<nav class="tabbar">
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'dashboard' %}"><i>⌂</i><span>Bosh</span></a>
+        <a href="{% if role == 'barber' %}{% url 'barber_appointments' %}{% else %}{% url 'appointments' %}{% endif %}"><i>◷</i><span>Navbat</span></a>
+        <a class="tab-plus" href="{% url 'public_booking' %}"><i>＋</i></a>
+        {% if role != 'barber' %}<a href="{% url 'customers' %}"><i>♙</i><span>Mijoz</span></a>{% else %}<a href="{% url 'assistant' %}"><i>✦</i><span>Chat</span></a>{% endif %}
+        <a href="{% url 'profile' %}"><i>◉</i><span>Profil</span></a>
+    {% else %}
+        <a href="{% url 'public_booking' %}"><i>✦</i><span>Bron</span></a>
+        <a href="{% url 'login' %}"><i>⇥</i><span>Kirish</span></a>
+    {% endif %}
+</nav>
+<button id="toTop" type="button" aria-label="Yuqoriga">↑</button>
+
+<script>
+(function(){
+  var path=location.pathname;
+  document.querySelectorAll('.sidebar nav a,.tabbar a').forEach(function(a){
+    var h=a.getAttribute('href'); if(!h) return;
+    if(h===path||(h!=='/'&&path.indexOf(h)===0)) a.classList.add('active');
+  });
+  function setIcon(t){document.querySelectorAll('.theme-toggle').forEach(function(b){b.textContent=t==='light'?'☀️':'🌙'})}
+  var cur=document.documentElement.getAttribute('data-theme')||'dark'; setIcon(cur);
+  document.querySelectorAll('.theme-toggle').forEach(function(b){b.addEventListener('click',function(){
+    var n=(document.documentElement.getAttribute('data-theme')==='light')?'dark':'light';
+    document.documentElement.setAttribute('data-theme',n); try{localStorage.setItem('aura-theme',n)}catch(e){} setIcon(n);
+  })});
+  document.querySelectorAll('.toast').forEach(function(t){t.addEventListener('click',function(){t.classList.add('hide')})});
+  // jadvallarga tezkor qidiruv
+  document.querySelectorAll('.table-wrap table').forEach(function(tb){
+    var rows=tb.querySelectorAll('tbody tr'); if(rows.length<6) return;
+    var box=document.createElement('div'); box.className='tsearch';
+    box.innerHTML='<input type="search" placeholder="🔎 Qidirish...">';
+    tb.parentNode.parentNode.insertBefore(box,tb.parentNode);
+    box.firstChild.addEventListener('input',function(){
+      var q=this.value.toLowerCase();
+      rows.forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(q)>-1?'':'none'});
+    });
+  });
+  // "/" bosilsa qidiruvga o'tadi
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){
+      var i=document.querySelector('.tsearch input'); if(i){e.preventDefault();i.focus()}
+    }
+  });
+  // salom
+  var g=document.getElementById('greet'); if(g){var h=new Date().getHours();
+    g.textContent=h<5?'XAYRLI TUN':h<12?'XAYRLI TONG':h<18?'XAYRLI KUN':'XAYRLI KECH'}
+  var up=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){up.style.display=window.scrollY>400?'block':'none'});
+  up.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+})();
+</script>
+
+</body>
+</html>

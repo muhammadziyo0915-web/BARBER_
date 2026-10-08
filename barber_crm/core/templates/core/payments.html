@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% block page_title %}To‘lovlar{% endblock %}
+{% block content %}
+<div class="section-head"><div><span class="eyebrow">PAYMENTS</span><h2>To‘lovlar</h2><p class="muted">Naqd, karta, Click va Payme tushumlarini bir joyda yuriting.</p></div></div>
+<div class="stats">
+  <div class="stat accent"><span>Jami to‘langan</span><b>{{ total|floatformat:0 }} so‘m</b><small>UZS</small></div>
+  <div class="stat"><span>Click</span><b>{{ totals.click|floatformat:0 }}</b><small>so‘m</small></div>
+  <div class="stat"><span>Payme</span><b>{{ totals.payme|floatformat:0 }}</b><small>so‘m</small></div>
+</div>
+<div class="two-col">
+<form method="post" class="card form">{% csrf_token %}
+  <h3>＋ To‘lov qo‘shish</h3>
+  <label>Mijoz<select name="customer" required>{% for x in customers %}<option value="{{x.id}}">{{x}}</option>{% endfor %}</select></label>
+  <label>Navbat<select name="appointment"><option value="">Tanlash shart emas</option>{% for x in appointments %}<option value="{{x.id}}">#{{x.id}} · {{x.date|date:'d.m'}} {{x.start_time|time:'H:i'}} — {{x.customer}}</option>{% endfor %}</select></label>
+  <div class="form-grid">
+    <label>Summa (so‘m)<input name="amount" type="number" min="0" step="1000" required></label>
+    <label>Usul<select name="payment_method"><option value="cash">Naqd</option><option value="card">Karta</option><option value="click">Click</option><option value="payme">Payme</option></select></label>
+  </div>
+  <div class="form-grid">
+    <label>Holat<select name="status"><option value="paid">To‘langan</option><option value="pending">Kutilmoqda</option><option value="failed">Muvaffaqiyatsiz</option><option value="refunded">Qaytarilgan</option></select></label>
+    <label>Tranzaksiya ID<input name="transaction_id" placeholder="Click/Payme ID"></label>
+  </div>
+  <label>Provider reference<input name="provider_reference" placeholder="Ixtiyoriy"></label>
+  <button class="primary">💳 To‘lovni saqlash</button>
+  <small class="muted">Click/Payme uchun merchant akkaunt ma’lumotlari alohida kiritiladi; CRM tranzaksiya ID va holatini saqlaydi.</small>
+</form>
+<section class="card table-card"><div class="table-wrap"><table>
+<tr><th>Mijoz</th><th>Summa</th><th>Usul</th><th>Holat</th><th>Sana</th></tr>
+{% for x in items %}<tr><td>{{x.customer}}</td><td>{{x.amount|floatformat:0}} so‘m</td><td>{{x.get_payment_method_display}}</td><td>{{x.get_status_display}}</td><td>{{x.paid_at|date:'d.m.Y H:i'}}</td></tr>{% empty %}<tr><td colspan="5" class="empty">To‘lovlar yo‘q.</td></tr>{% endfor %}
+</table></div></section>
+</div>
+{% endblock %}
